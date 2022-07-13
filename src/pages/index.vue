@@ -2,6 +2,8 @@
 import { buildPoseidon } from 'poseidon'
 
 let poseidon: any
+let isError = $ref(false)
+let errorMsg = $ref('')
 
 onMounted(async () => {
   poseidon = await buildPoseidon()
@@ -17,7 +19,16 @@ const input = $ref('')
 let output = $ref('')
 
 function onClick() {
-  output = poseidonHash(input.split(','))
+  try {
+    const hash = poseidonHash(input.split(','))
+    output = hash
+    isError = false
+    errorMsg = ''
+  }
+  catch (e: any) {
+    isError = true
+    errorMsg = e.toString()
+  }
 }
 </script>
 
@@ -46,6 +57,11 @@ function onClick() {
     >
       poseidon hash
     </button>
-    <div>{{ output }}</div>
+    <div v-if="!isError">
+      {{ output }}
+    </div>
+    <div v-else text-red op-80>
+      {{ errorMsg }}
+    </div>
   </div>
 </template>
