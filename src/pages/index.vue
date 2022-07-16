@@ -1,27 +1,15 @@
 <script setup lang='ts'>
-import { buildPoseidon } from 'poseidon'
-
-let poseidon: any
 let isError = $ref(false)
 let errorMsg = $ref('')
 
-onMounted(async () => {
-  poseidon = await buildPoseidon()
-})
-
-function poseidonHash(inputs: Array<String>) {
-  const hash = poseidon(inputs)
-  const hashStr = poseidon.F.toString(hash)
-  return `0x${BigInt(hashStr).toString(16).padStart(64, '0')}`
-}
+const { poseidonHash } = usePoseidon()
 
 const input = $ref('')
 let output = $ref('')
 
 function onClick() {
   try {
-    const hash = poseidonHash(input.split(','))
-    output = hash
+    output = poseidonHash(input.split(','))
     isError = false
     errorMsg = ''
   }
@@ -38,7 +26,6 @@ function onClick() {
       <span
         i-carbon-idea
       />
-
       <span>
         sperate input with comma
       </span>
