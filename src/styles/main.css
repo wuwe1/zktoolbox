@@ -9,3 +9,7 @@ body,
 html.dark {
   background: #121212;
 }
+
+html.dark input {
+  background: #121212;
+}

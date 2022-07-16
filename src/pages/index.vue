@@ -49,6 +49,7 @@ function onClick() {
       min-w-60
       border
       border-blue
+      text-blue
       @keyup.enter="onClick"
     >
     <button
